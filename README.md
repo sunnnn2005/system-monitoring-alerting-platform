@@ -26,8 +26,11 @@ system.
 - Health endpoint for uptime checks
 - Metrics endpoint for Prometheus scraping
 - Simulated API endpoint with request latency and occasional errors
+- Lightweight local dashboard at `/dashboard`
+- Traffic generator for producing realistic demo metrics
 - Prometheus scrape configuration
 - Alert rules for high error rate and high latency
+- Grafana dashboard provisioning
 - Alertmanager Slack receiver configuration template
 
 ## Resume Bullets
@@ -45,20 +48,57 @@ system.
 
 ```bash
 npm install
+npm start
+```
+
+Open:
+
+- Local dashboard: http://localhost:3000/dashboard
+- Health check: http://localhost:3000/health
+- Demo API: http://localhost:3000/api/orders
+- Prometheus metrics: http://localhost:3000/metrics
+
+Generate demo traffic:
+
+```bash
+npm run load
+```
+
+## Docker Run
+
+Docker Compose starts the Node service, Prometheus, Alertmanager, and Grafana:
+
+```bash
 docker compose up --build
 ```
 
 Service URLs:
 
 - App: http://localhost:3000
+- Local dashboard: http://localhost:3000/dashboard
 - Metrics: http://localhost:3000/metrics
 - Prometheus: http://localhost:9090
 - Grafana: http://localhost:3001
 
+Grafana login:
+
+- Username: `admin`
+- Password: `admin`
+
+The Grafana dashboard is provisioned from
+`grafana/dashboards/demo-api-dashboard.json`.
+
+## Verification Notes
+
+Verified locally:
+
+- `/health` returns service status
+- `/api/orders` returns simulated order data with variable latency
+- `/metrics` exposes Prometheus-format Node.js and application metrics
+- `scripts/generate-traffic.js` produces request volume and simulated failures
+
 ## Project Roadmap
 
-- Add Grafana dashboard JSON
-- Add load-testing script for realistic traffic
 - Add service-level objective tracking
 - Add runbook documentation for alerts
 - Add Go version of the metrics service as a stretch goal
