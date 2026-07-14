@@ -1,14 +1,8 @@
 route:
-  receiver: slack-notifications
+  receiver: local-demo
   group_wait: 10s
   group_interval: 1m
   repeat_interval: 1h
 
 receivers:
-  - name: slack-notifications
-    slack_configs:
-      - api_url: "${SLACK_WEBHOOK_URL}"
-        channel: "#alerts"
-        title: "{{ .CommonAnnotations.summary }}"
-        text: "{{ .CommonAnnotations.description }}"
-        send_resolved: true
+  - name: local-demo

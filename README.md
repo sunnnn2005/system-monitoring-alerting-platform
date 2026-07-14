@@ -31,7 +31,7 @@ system.
 - Prometheus scrape configuration
 - Alert rules for high error rate and high latency
 - Grafana dashboard provisioning
-- Alertmanager Slack receiver configuration template
+- Local-safe Alertmanager config plus Slack receiver template
 
 ## Resume Bullets
 
@@ -78,12 +78,19 @@ Docker Compose starts the Node service, Prometheus, Alertmanager, and Grafana:
 docker compose up --build
 ```
 
+On macOS, if Docker Desktop is installed but `docker` is not on the shell path:
+
+```bash
+PATH=/Applications/Docker.app/Contents/Resources/bin:$PATH docker compose up --build
+```
+
 Service URLs:
 
 - App: http://localhost:3000
 - Local dashboard: http://localhost:3000/dashboard
 - Metrics: http://localhost:3000/metrics
 - Prometheus: http://localhost:9090
+- Alertmanager: http://localhost:9093
 - Grafana: http://localhost:3001
 
 Grafana login:
@@ -93,6 +100,12 @@ Grafana login:
 
 The Grafana dashboard is provisioned from
 `grafana/dashboards/demo-api-dashboard.json`.
+
+The default Alertmanager configuration uses a local no-op receiver so the stack
+starts without secrets. To enable Slack notifications, copy
+`alertmanager/slack-alertmanager.example.yml` over
+`alertmanager/alertmanager.yml`, set `SLACK_WEBHOOK_URL`, and run Alertmanager
+with environment expansion enabled.
 
 ## Verification Notes
 
