@@ -64,6 +64,12 @@ Generate demo traffic:
 npm run load
 ```
 
+Run tests:
+
+```bash
+npm test
+```
+
 ## Docker Run
 
 Docker Compose starts the Node service, Prometheus, Alertmanager, and Grafana:
@@ -94,8 +100,10 @@ Verified locally:
 
 - `/health` returns service status
 - `/api/orders` returns simulated order data with variable latency
+- `/api/summary` returns dashboard-ready aggregate metrics
 - `/metrics` exposes Prometheus-format Node.js and application metrics
 - `scripts/generate-traffic.js` produces request volume and simulated failures
+- Node test suite covers health, summary, metrics, and dashboard endpoints
 
 ## Project Roadmap
 
