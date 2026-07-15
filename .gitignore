@@ -1,3 +1,8 @@
 node_modules/
 .DS_Store
 package-lock.json
+.env
+.env.local
+coverage/
+dist/
+npm-debug.log*

@@ -4,6 +4,19 @@ An observability project for a containerized web service. The app exposes runtim
 metrics, Prometheus scrapes them, Grafana visualizes service health, and
 Alertmanager can route alerts to Slack.
 
+## Highlights
+
+- Production-style monitoring stack using Express, Prometheus, Grafana,
+  Alertmanager, and Docker Compose
+- Prometheus metrics for health, request volume, latency, error rate, and runtime
+  behavior
+- Grafana dashboard provisioning so the local observability UI works after
+  startup
+- Alert rules for latency and error spikes, plus a Slack-ready Alertmanager
+  template
+- Node test suite covering health, metrics, dashboard summaries, and API
+  endpoints
+
 ## Why This Project
 
 This project shows backend engineering plus infrastructure awareness: metrics,
@@ -47,8 +60,8 @@ system.
 ## Local Run
 
 ```bash
-npm install
-npm start
+pnpm install
+pnpm start
 ```
 
 Open:
@@ -61,14 +74,17 @@ Open:
 Generate demo traffic:
 
 ```bash
-npm run load
+pnpm run load
 ```
 
 Run tests:
 
 ```bash
-npm test
+pnpm test
 ```
+
+If you prefer npm, `npm install` and `npm test` also work after generating a
+local `package-lock.json`.
 
 ## Docker Run
 
@@ -117,6 +133,19 @@ Verified locally:
 - `/metrics` exposes Prometheus-format Node.js and application metrics
 - `scripts/generate-traffic.js` produces request volume and simulated failures
 - Node test suite covers health, summary, metrics, and dashboard endpoints
+
+## Architecture
+
+See [`docs/architecture.md`](docs/architecture.md) for the system design,
+metrics flow, alerting flow, and reliability scenarios.
+
+## Interview Talking Points
+
+- Why application metrics are more useful than logs alone for production
+  reliability
+- How Prometheus scraping differs from push-based monitoring
+- How alert thresholds can create false positives if they are too sensitive
+- How Grafana dashboards help debug latency, error rates, and traffic changes
 
 ## Project Roadmap
 
